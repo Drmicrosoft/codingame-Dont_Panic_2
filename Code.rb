@@ -45,6 +45,10 @@ STDERR.puts a.map { |x| x.join(' ') }
 omar = 0 #to delay when start in elevator
 omar_floor = 0 
 blocked = 0 
+
+init1=0
+
+
 loop do
     
     # clone_floor: floor of the leading clone
@@ -55,6 +59,57 @@ loop do
     clone_floor, clone_pos, direction = gets.split(" ")
     clone_floor = clone_floor.to_i
     clone_pos = clone_pos.to_i
+    
+    
+    
+    #Choose Track
+
+
+
+
+    STDERR.puts "START CHECKING VALUES "
+    i=0
+    j=nb_floors
+    y = Array.new(width,-1) {Array.new(3,-1)} 
+    
+    f_j = clone_floor
+    f_i = clone_pos
+    counter = 0 
+    if init1 == 0 
+        init1=1
+        STDERR.puts "Printing Y Matrix "
+        STDERR.puts y.map { |x| x.join(' ') }
+        while j > 0
+            while i < width
+
+                STDERR.print "*** Searching for Value = " , j , " , " , i , " = " , a[(j-1)][(i)] ,"\n"
+                if a[(j-1)][(i)]>1
+                    STDERR.print "*** Found one = " , a[(j-1)][(i)] , " at " , j , " , " , i , "\n"
+                    y[counter][(0)] = j-1
+                    y[counter][(1)] = i
+                    y[counter][(2)] = (i-f_i).abs
+                    counter +=1
+                end
+                i+=1
+                
+            end
+            STDERR.puts y.map { |x| x.join(' ') }
+            j-=1
+            i=0
+            counter = 0 
+            STDERR.print "*** NEW Values = " , j , " , " , i , "\n"
+            y = Array.new(width,-1) {Array.new(3,-1)} 
+
+
+        end
+    end
+
+
+
+
+
+
+
     STDERR.puts "Check STEP"
     if omar_floor != clone_floor 
         omar_floor = clone_floor
